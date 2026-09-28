@@ -7,12 +7,18 @@
 
 **GitHub repository:** https://github.com/Omoleen/SOFE3980U-Lab3-Part2
 
+**Videos:**
+
+- Continuous integration: https://www.loom.com/share/917443632af54639b94b2032caeb5ae4
+- Design, part 1: https://www.loom.com/share/9ad8595154894b9bad5a3fd4c329f6fd
+- Design, part 2: https://www.loom.com/share/08c4aaf39481430da7a4044353039de1
+
 ---
 
 ## 1. Setup
 
 | Item | Value |
-| --- | --- |
+| ----- | ------------------------ |
 | GKE cluster | `sofe3980u-cluster`, zone `northamerica-northeast2-a`, 2 x `e2-standard-4` |
 | Jenkins | Helm chart `jenkinsci/jenkins` 5.9.64, Jenkins 2.568.3, release `cd-jenkins` |
 | Artifact Registry | Docker repository `sofe3980u` in `northamerica-northeast2` |
@@ -120,12 +126,12 @@ agent directive decides which node those steps run on.
 The webapp was brought up to the Lab 1 version of the calculator.
 
 | File | Change |
-| --- | --- |
+| ----------- | ------------------ |
 | `Binary.java` | Replaced with the Lab 1 class: `or`, `and` and `multiply` (shift-and-add), plus null and empty input handling in the constructor |
-| `BinaryController.java` | The `*`, `\|` and `&` operators now return a result page. Unknown operators return the `error` view. The original code returned `"Error"`, which does not match `error.html` on a case-sensitive file system |
+| `BinaryController.java` | The multiply (`*`), OR and AND (`&`) operators now return a result page. Unknown operators return the `error` view. The original code returned `"Error"`, which does not match `error.html` on a case-sensitive file system |
 | `BinaryAPIController.java` | Added `/multiply`, `/or` and `/and`, each with a `_json` variant that returns a `BinaryAPIResult` |
 | `BinaryTest.java` | Added the 27 Lab 1 unit tests for `Binary` |
-| `BinaryControllerTest.java` | Added 4 tests: POST with `*`, `\|` and `&`, and an invalid operator |
+| `BinaryControllerTest.java` | Added 4 tests: POST with multiply, OR and AND, and an invalid operator |
 | `BinaryAPIControllerTest.java` | Added 6 tests: plain and JSON forms of each new endpoint |
 | `.gitignore` | Excludes `target/` |
 
@@ -159,3 +165,5 @@ stages, and `BinaryCalculator_cicd` rebuilt the image and replaced the
 deployment. The last line of its console output is the external IP of
 `binarycalculator-service`, and the calculator is served at
 `http://34.130.18.211:8080`, where `*`, `|` and `&` now return results.
+The deployed REST API gives the same answers as the tests: `/multiply`,
+`/or` and `/and` with `111` and `1010` return `1000110`, `1111` and `10`.
